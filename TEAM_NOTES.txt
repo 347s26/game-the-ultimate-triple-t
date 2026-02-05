@@ -1,0 +1,20 @@
+""" 
+Models:
+  - User
+    1. Win / Loss, account specified.
+    2. Each user gets assigned a Marker.
+  - Marker
+    1. Xs or Os
+  - Board
+    1. Full game board with 9 boardSections
+    2. 2D array " board = [3][3] " with the 9 boardSections.
+  - boardSection
+    1. The first layer for gameplay, when a user wins the sector it becomes unplayable.
+    2. Contains 9 Squares, user must get 3 squares in a row to win sector.
+    3. If the user with an X marker selects the bottom right square in the boardSection, the user
+    with the O marker has to select their next square in the bottom right boardSection.
+    4. 2D array " square = [3][3] " with nine square Sections.
+  - Square
+    1. Contains boolean blackout defaulted to false. If opponent wins a section, 
+    all other section squares blackout.
+"""
