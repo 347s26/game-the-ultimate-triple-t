@@ -1,19 +1,12 @@
  # Ultimate Tic-Tac-Toe Model Architecture
 
-## 1. User 1
-- **Player Statistics:** Stores stats such as W/L.
-- **Marker:** Given an X marker.
-- **ID** Username
-- **Color** User Collor
-
-## 2. User 2
-- **Player Statistics:** Stores stats such as W/L.
-- **Marker:** Given an O marker.
-
+## 1. User
+ - **Player Statistics**  Stores status such as W/L
+ - **Marker** Given X or O
+  
 ## 3. Board
 - **Description:** The global game board encompassing the entire match.
-- **Structure:** A 3x3 2D array containing 9 **BoardSections**.
-- **Data:** `board[3][3]`
+- **Structure:** A list containing 9 **BoardSections**.
 
 ## 4. BoardSection
 - **Description:** The primary gameplay layer (the "Local" board).
@@ -22,13 +15,12 @@
 - **Flow Control:** The square index chosen by the current player determines the **BoardSection** index for the next player.
     * *Logic Example:* Choosing the **bottom-right** square forces the opponent to play in the **bottom-right** board section.
 - **Structure:** A 3x3 2D array.
-- **Data:** `square[3][3]
+- **Data:** Integer Board Section (2) for top right BoardSection
 
 ## 5. Square
 - **Hidden_State** True or False if you can see any BoardSection, when other player wins a BoardSection
 - **Marker** X or O
-- **X** Integer for X-Coordinate
-- **Y** Integer for Y-Coordinate
+- **Data** Integer for Square number (05) for top left BoardSection 5th square
 
 ## 6. Marker
 - **User** Account associated with Marker in Game
@@ -39,8 +31,8 @@
 - **Joined**
 - **Color** User Collor
 
-## 8. GameManager
-- **ValidateMove** Checks if a current move is Valid
+## 8. Game
+- **Winner** UserID 
 - **GameState** State of the game
 - **Board** The Board
 - **User1** Player 1 
