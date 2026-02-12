@@ -1,14 +1,14 @@
  # Ultimate Tic-Tac-Toe Model Architecture
 
-## 1. User
+## 1. User (Nicholas)
  - **Player Statistics**  Stores status such as W/L
  - **Marker** Given X or O
   
-## 3. Board
+## 2. Board (Tristan)
 - **Description:** The global game board encompassing the entire match.
 - **Structure:** A list containing 9 **BoardSections**.
 
-## 4. BoardSection
+## 3. BoardSection (Maci)
 - **Description:** The primary gameplay layer (the "Local" board).
 - **Win Condition:** User must align 3 squares in a row to capture the sector.
 - **State:** Once a sector is won, it becomes unplayable.
@@ -17,21 +17,21 @@
 - **Structure:** A 3x3 2D array.
 - **Data:** Integer Board Section (2) for top right BoardSection
 
-## 5. Square
+## 4. Square (Maci)
 - **Hidden_State** True or False if you can see any BoardSection, when other player wins a BoardSection
 - **Marker** X or O
 - **Data** Integer for Square number (05) for top left BoardSection 5th square
 
-## 6. Marker
+## 5. Marker (Tristan)
 - **User** Account associated with Marker in Game
 - **Value** 1 or 0 -> X or 0 (respectively) 
 
-## 7. Player Statistics
+## 6. Player Statistics (Nicholas)
 - **Win/Loss**
 - **Joined**
 - **Color** User Collor
 
-## 8. Game
+## 7. Game (Jacob)
 - **Winner** UserID 
 - **GameState** State of the game
 - **Board** The Board
