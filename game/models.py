@@ -28,6 +28,44 @@ class User(models.Model):
         """String for representing the User object (in Admin site etc.)."""
         return self.username
 
+
+
+### 3. BoardSection (Maci) 
+# The primary gameplay layer (the "Local" board).
+class BoardSection(models.Model):
+        # ForeignKey linking this BoardSection to its parent Board.
+        # If the Board is deleted, all its sections are deleted as well.
+    board = models.ForeignKey('Board', on_delete=models.CASCADE, related_name="sections")
+    position = models.PositiveSmallIntegerField(help_text="0-8 index of this section on the global board") # Position of this section within the global board (0–8).
+        # Stores which Marker (X or O) won this section. If null, the section has not been won yet.
+        # SET_NULL keeps the section if a Marker is deleted.
+    winner_marker = models.ForeignKey('Marker', on_delete=models.SET_NULL, null=True,related_name="won_sections")
+    
+    class Meta:
+        ordering = ["board", "position"]
+        constraints = [models.UniqueConstraint(fields=["board", "position"], name="unique_section_per_board_position"),]  # Ensures you cannot have two sections with the same position on one board
+    def get_absolute_url(self):
+        return reverse('boardsection-detail', args=[str(self.id)])
+    def __str__(self):
+        return f"BoardSection(board_id={self.board_id}, pos={self.position}, winner={self.winner_marker})"
+
+
+## 4. Square (Maci)
+class Square(models.Model):
+    section = models.ForeignKey('BoardSection', on_delete=models.CASCADE, related_name="squares")  # Links square to its parent BoardSection. If the section is deleted, its squares are deleted.
+    position = models.PositiveSmallIntegerField(help_text="0-8 index of this section on the global board") # Position of this section within the global board (0–8).
+    marker = models.ForeignKey('Marker', on_delete=models.SET_NULL, null=True, related_name="marked_squares")
+    hidden_state = models.BooleanField(default=False)  # True if this square should be hidden/unplayable.
+    
+    class Meta:
+        ordering = ["section", "position"] 
+        constraints = [models.UniqueConstraint(fields=["section", "position"], name="unique_square_per_section_position"),] # Prevents duplicate square positions within same section
+    def get_absolute_url(self):
+        return reverse("square-detail", args=[str(self.id)])
+    def __str__(self):
+        return f"Square(section_id={self.section_id}, pos={self.position}, marker={self.marker}, hidden={self.hidden_state})"
+ 
+
 ### 6. User Statistics (Nicholas)
 # - **Win/Loss**
 # - **Games** number of games played
