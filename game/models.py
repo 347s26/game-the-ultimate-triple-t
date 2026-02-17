@@ -93,3 +93,22 @@ class UserStatistics(models.Model):
         """String for representing the UserStatistics object (in Admin site etc.)."""
         return f"{self.user.username}: {self.win} - {self.loss} - {self.user_color}"
     
+
+# 7. Game (Jacob)
+class game(models.Model):
+
+    winner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    gameState = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    board = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user1 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user2 = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of game."""
+        return reverse('game-detail', args=[str(self.id)])
+    
+    def __str__(self):
+        """String for representing the game object (in Admin site etc.)."""
+        return f"{self.user1.username} vs {self.user2.username} -> winner: {self.winner.username}"
+    
