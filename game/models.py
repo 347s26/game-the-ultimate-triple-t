@@ -28,7 +28,38 @@ class User(models.Model):
         """String for representing the User object (in Admin site etc.)."""
         return self.username
 
+### 2. Board (Tristan)
+    # Fields
+    # Determines which BoardSection (0–8) the next player must play in.
+    # If null, the player may choose any available section.
+    active_section = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text="0-8 index of the active BoardSection"
+    )
 
+    # Stores which Marker (X or O) won the entire board.
+    winner_marker = models.ForeignKey(
+        'Marker',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    # Metadata
+    class Meta:
+        ordering = ['id']
+
+    # Methods
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of Board."""
+        return reverse('board-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Board object."""
+        if self.winner_marker:
+            return f"Board {self.id} (Winner: {self.winner_marker})"
+        return f"Board {self.id} (In Progress)"
 
 ### 3. BoardSection (Maci) 
 # The primary gameplay layer (the "Local" board).
@@ -64,7 +95,34 @@ class Square(models.Model):
         return reverse("square-detail", args=[str(self.id)])
     def __str__(self):
         return f"Square(section_id={self.section_id}, pos={self.position}, marker={self.marker}, hidden={self.hidden_state})"
- 
+
+### 5. Marker (Tristan) 
+class Marker(models.Model):
+
+    # Fields
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    # 1 = X, 0 = O
+    value = models.IntegerField(
+        choices=((0, 'O'), (1, 'X'))
+    )
+
+    # Metadata
+    class Meta:
+        ordering = ['value']
+
+    # Methods
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of Marker."""
+        return reverse('marker-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Marker object."""
+        return 'X' if self.value == 1 else 'O'
 
 ### 6. User Statistics (Nicholas)
 # - **Win/Loss**
