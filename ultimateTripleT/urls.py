@@ -21,12 +21,5 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
-
-urlpatterns += [
-    path('game/', include('game.urls')),
-]
-# Add URL maps to redirect the base URL to our application
-urlpatterns += [
-    path('', RedirectView.as_view(url='game/', permanent=True)),
+    path('', include('game.urls')),
 ]
