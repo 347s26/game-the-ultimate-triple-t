@@ -28,8 +28,9 @@ class User(models.Model):
         """String for representing the User object (in Admin site etc.)."""
         return self.username
 
-### 2. Board (Tristan)
-    # Fields
+## 2. Board (Tristan)
+class Board(models.Model):
+
     # Determines which BoardSection (0–8) the next player must play in.
     # If null, the player may choose any available section.
     active_section = models.PositiveSmallIntegerField(
@@ -52,11 +53,9 @@ class User(models.Model):
 
     # Methods
     def get_absolute_url(self):
-        """Returns the URL to access a particular instance of Board."""
         return reverse('board-detail', args=[str(self.id)])
 
     def __str__(self):
-        """String for representing the Board object."""
         if self.winner_marker:
             return f"Board {self.id} (Winner: {self.winner_marker})"
         return f"Board {self.id} (In Progress)"
